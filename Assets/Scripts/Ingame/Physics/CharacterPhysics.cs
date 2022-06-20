@@ -6,9 +6,12 @@ namespace Ingame.Physics
 {
     public class CharacterPhysics : MonoBehaviour
     {
+        const float collisionTolerance = 0.0f;
         private BoxCollider2D characterCollider;
         public Vector2 velocity {private get; set;}
         public Vector2 controlVelocity {private get; set;}
+        public bool onGround {get; private set;}
+        public Vector2 gravity {get; private set;} = Vector2.down * 10;
         private void Awake()
         {
             characterCollider = gameObject.GetComponent<BoxCollider2D>();
@@ -19,8 +22,24 @@ namespace Ingame.Physics
             controlVelocity = Vector2.zero;
         }
 
-        protected Vector2 CheckCollision(Vector2 pos, Vector2 vel) {
-            const float collisionTolerance = 0.0f;
+        private bool OnGround () {
+            const float groundDetectionTolerance = 0.01f;
+            Vector2 gravityDirection = (gravity.magnitude == 0)? Vector2.down : gravity.normalized;
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(transform.position.x, transform.position.y) + gravityDirection * groundDetectionTolerance, characterCollider.size - new Vector2(groundDetectionTolerance, 0), 0, gravityDirection, 0);
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                RaycastHit2D hit = hits[i];
+                if (hit.collider == characterCollider)
+                {
+                    continue;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private Vector2 CheckCollision(Vector2 pos, Vector2 vel) {
             Vector2 displacement = vel * Time.deltaTime;
             RaycastHit2D[] hits = Physics2D.BoxCastAll(pos + displacement.normalized * collisionTolerance, characterCollider.size, 0, displacement.normalized, displacement.magnitude);
 
@@ -36,9 +55,7 @@ namespace Ingame.Physics
             return displacement;
         }
 
-        protected Vector2 GetFinalDisplacement () {
-            const float collisionTolerance = 0.0f;
-
+        private Vector2 GetFinalDisplacement () {
             Vector2 currentPosition = new Vector2 (transform.position.x, transform.position.y);
             Vector2 defaultDisplacement = CheckCollision(currentPosition, velocity);
             
@@ -71,6 +88,8 @@ namespace Ingame.Physics
         {
             Vector2 displacement = GetFinalDisplacement();
             transform.Translate(displacement);
+
+            onGround = OnGround();
         }
     }   
 }
