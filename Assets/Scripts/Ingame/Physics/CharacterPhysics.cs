@@ -61,7 +61,7 @@ namespace Ingame.Physics
                 if (projectionMagnitude < 0)
                 {
                     Vector2 projection = projectionMagnitude * colliderNormal;
-                    return defaultDisplacement + displacement - projection;
+                    displacement = displacement - projection;
                 }
             }
             return defaultDisplacement + displacement;
