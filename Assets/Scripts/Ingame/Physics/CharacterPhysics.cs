@@ -11,7 +11,7 @@ namespace Ingame.Physics
         public Vector2 velocity {private get; set;}
         public Vector2 controlVelocity {private get; set;}
         public bool onGround {get; private set;}
-        public Vector2 gravity {get; private set;} = Vector2.down * 10;
+        public Vector2 gravity {get; private set;} = Vector2.down * 20;
 
         private Vector2 colliderSize
         {
