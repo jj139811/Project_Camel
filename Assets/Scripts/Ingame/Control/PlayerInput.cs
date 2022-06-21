@@ -23,5 +23,12 @@ namespace Ingame.Control {
         {
             physics.controlVelocity = direction * playerCharacter.moveSpeed;
         }
+        public void Jump()
+        {
+            if (physics.onGround)
+            {
+                physics.velocity = Vector2.up * playerCharacter.jumpSpeed;
+            }
+        }
     }
 }

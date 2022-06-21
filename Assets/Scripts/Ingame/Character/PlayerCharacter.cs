@@ -7,6 +7,7 @@ namespace Ingame.Character
     public class PlayerCharacter: MonoBehaviour
     {
         public float moveSpeed {get; private set;} = 10;
+        public float jumpSpeed {get; private set;} = 10;
         private void Awake() {
             
         }
