@@ -9,6 +9,8 @@ namespace Ingame.Control {
     {
         private PlayerCharacter playerCharacter;
         private CharacterPhysics physics;
+        private bool jumping;
+        private float jumpingDt;
         private void Awake () {
             playerCharacter = gameObject.GetComponent<PlayerCharacter>();
             if (playerCharacter == null) {
@@ -18,6 +20,8 @@ namespace Ingame.Control {
             if (physics == null) {
                 throw new System.Exception("Cannot fin CharacterPhysics of : " + gameObject.name);
             }
+
+            jumping = false;
         }
         public void Move(Vector2 direction)
         {
@@ -28,7 +32,27 @@ namespace Ingame.Control {
             if (physics.onGround)
             {
                 physics.velocity = Vector2.up * playerCharacter.jumpSpeed;
+                jumping = true;
+                jumpingDt = 0;
             }
+        }
+        public void JumpPressing ()
+        {
+            if (jumping)
+            {
+                jumpingDt += Time.deltaTime;
+                if (jumpingDt > playerCharacter.maxJumpDuration)
+                {
+                    jumping = false;
+                }
+                else
+                {
+                    physics.velocity = Vector2.up * playerCharacter.jumpSpeed;
+                }
+            }
+        }
+        public void JumpUp () {
+            jumping = false;
         }
     }
 }

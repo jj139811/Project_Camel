@@ -41,6 +41,14 @@ namespace Ingame.Control
             {
                 playerInput.Jump();
             }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                playerInput.JumpPressing();
+            }
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                playerInput.JumpUp();
+            }
         }
     }
 }

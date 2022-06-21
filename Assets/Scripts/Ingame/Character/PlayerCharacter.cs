@@ -8,6 +8,7 @@ namespace Ingame.Character
     {
         public float moveSpeed {get; private set;} = 10;
         public float jumpSpeed {get; private set;} = 10;
+        public float maxJumpDuration {get; private set;} = 0.5f;
         private void Awake() {
             
         }
