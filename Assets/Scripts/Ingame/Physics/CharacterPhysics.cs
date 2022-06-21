@@ -12,6 +12,7 @@ namespace Ingame.Physics
         public Vector2 controlVelocity {private get; set;}
         public bool onGround {get; private set;}
         public Vector2 gravity {get; private set;} = Vector2.down * 20;
+        public RaycastHit2D stepHitInfo {get; private set;}
 
         private Vector2 colliderSize
         {
@@ -49,6 +50,7 @@ namespace Ingame.Physics
                 {
                     continue;
                 }
+                stepHitInfo = hit;
                 return true;
             }
             return false;

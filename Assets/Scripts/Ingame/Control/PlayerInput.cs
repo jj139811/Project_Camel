@@ -25,6 +25,14 @@ namespace Ingame.Control {
         }
         public void Move(Vector2 direction)
         {
+            if (physics.onGround)
+            {
+                Vector2 normal = physics.stepHitInfo.normal;
+                float projectionMagnitude = direction.x * normal.x + direction.y * normal.y;
+                Vector2 remaining = direction - projectionMagnitude * normal;
+                physics.controlVelocity = remaining * playerCharacter.moveSpeed;
+                return;
+            }
             physics.controlVelocity = direction * playerCharacter.moveSpeed;
         }
         public void Jump()
