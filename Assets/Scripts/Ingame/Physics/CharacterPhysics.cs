@@ -11,6 +11,7 @@ namespace Ingame.Physics
         public Vector2 velocity {private get; set;}
         public Vector2 controlVelocity {private get; set;}
         public bool onGround {get; private set;}
+        public bool onHead {get; private set;}
         public Vector2 gravity {get; private set;} = Vector2.down * 20;
         public RaycastHit2D stepHitInfo {get; private set;}
 
@@ -51,6 +52,26 @@ namespace Ingame.Physics
                     continue;
                 }
                 stepHitInfo = hit;
+                return true;
+            }
+            return false;
+        }
+        private bool OnHead () {
+            const float groundDetectionTolerance = 0.01f;
+            if ((velocity + controlVelocity).y < groundDetectionTolerance) {
+                return false;
+            }
+
+            Vector2 gravityDirection = (gravity.magnitude == 0)? Vector2.up : -gravity.normalized;
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(transform.position.x, transform.position.y) + gravityDirection * groundDetectionTolerance, colliderSize - new Vector2(groundDetectionTolerance, 0), 0, gravityDirection, 0);
+
+            for (int i = 0; i < hits.Length; i++)
+            {
+                RaycastHit2D hit = hits[i];
+                if (hit.collider == characterCollider)
+                {
+                    continue;
+                }
                 return true;
             }
             return false;
@@ -124,7 +145,8 @@ namespace Ingame.Physics
             transform.Translate(displacement);
 
             onGround = OnGround();
-            if (onGround) 
+            onHead = OnHead();
+            if (onGround || onHead) 
             {
                 velocity = Vector2.zero;
             }

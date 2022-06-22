@@ -49,8 +49,9 @@ namespace Ingame.Control {
             if (jumping)
             {
                 jumpingDt += Time.deltaTime;
-                if (jumpingDt > playerCharacter.maxJumpDuration)
+                if (jumpingDt > playerCharacter.maxJumpDuration || physics.onHead)
                 {
+
                     jumping = false;
                 }
                 else
