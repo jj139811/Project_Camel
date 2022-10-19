@@ -9,7 +9,8 @@ namespace Ingame.Control {
     {
         private PlayerCharacter playerCharacter;
         private CharacterPhysics physics;
-        private bool jumping;
+        public bool moving {get; private set;}
+        public bool jumping {get; private set;}
         private float jumpingDt;
         private void Awake () {
             playerCharacter = gameObject.GetComponent<PlayerCharacter>();
@@ -25,6 +26,15 @@ namespace Ingame.Control {
         }
         public void Move(Vector2 direction)
         {
+            if (direction.magnitude < 0.001f)
+            {
+                moving = false;
+            }
+            else
+            {
+                moving = true;
+            }
+            playerCharacter.SetDirection(direction.x > 0? CharacterDirection.RIGHT: CharacterDirection.LEFT);
             if (physics.onGround)
             {
                 Vector2 normal = physics.stepHitInfo.normal;
@@ -34,6 +44,10 @@ namespace Ingame.Control {
                 return;
             }
             physics.controlVelocity = direction * playerCharacter.moveSpeed;
+        }
+        public void Stop()
+        {
+            moving = false;
         }
         public void Jump()
         {
