@@ -48,7 +48,6 @@ namespace Ingame.Character
         }
         private void OnCollisionOccur (Collider2D collider)
         {
-            UnityEngine.Debug.Log("hi");
             GameObject target = collider.gameObject;
             if (target.tag == "Player")
             {
