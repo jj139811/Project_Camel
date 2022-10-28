@@ -6,12 +6,12 @@ namespace Ingame.Character
 {
     public class Container : MonoBehaviour
     {
-        private Slot[] slots;
+        protected Slot[] slots;
         public int numSlots = 4;
         public Vector2[] slotPositions;
-        public int slotIndex;
+        protected int slotIndex;
         private BoxCollider2D boxCollider2D;
-        void Awake()
+        protected virtual void Awake()
         {
             boxCollider2D = gameObject.GetComponent<BoxCollider2D>();
             if (boxCollider2D == null)
@@ -46,7 +46,7 @@ namespace Ingame.Character
                 slots[i].SyncWithParent();
             }
         }
-        private void OnCollisionOccur (Collider2D collider)
+        protected virtual void OnCollisionOccur (Collider2D collider)
         {
             GameObject target = collider.gameObject;
             if (target.tag == "Player")

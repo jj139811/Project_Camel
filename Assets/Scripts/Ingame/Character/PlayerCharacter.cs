@@ -24,8 +24,8 @@ namespace Ingame.Character
         public CharacterDirection direction {get; private set;}
         private CharacterPhysics physics;
         private PlayerInput control;
-        public float moveSpeed {get; private set;} = 10;
-        public float jumpSpeed {get; private set;} = 10;
+        public float moveSpeed {get; set;} = 10;
+        public float jumpSpeed {get; set;} = 10;
         public float maxJumpDuration {get; private set;} = 0.5f;
         public bool enableStateUpdate = true;
         private void Awake() {
