@@ -14,6 +14,7 @@ namespace Ingame.Physics
         public bool onHead {get; private set;}
         public Vector2 gravity {get; private set;} = Vector2.down * 20;
         public RaycastHit2D stepHitInfo {get; private set;}
+        public bool enablePhysics = true;
 
         private Vector2 colliderSize
         {
@@ -47,7 +48,7 @@ namespace Ingame.Physics
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit2D hit = hits[i];
-                if (hit.collider == characterCollider)
+                if (hit.collider == characterCollider || hit.collider.gameObject.tag == "Player")
                 {
                     continue;
                 }
@@ -68,7 +69,7 @@ namespace Ingame.Physics
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit2D hit = hits[i];
-                if (hit.collider == characterCollider)
+                if (hit.collider == characterCollider || hit.collider.gameObject.tag == "Player")
                 {
                     continue;
                 }
@@ -87,7 +88,7 @@ namespace Ingame.Physics
             {
                 RaycastHit2D hit = hits[i];
 
-                if (hit.collider == characterCollider) {
+                if (hit.collider == characterCollider || hit.collider.gameObject.tag == "Player") {
                     continue;
                 }
                 if (hit.normal.x * vel.x + hit.normal.y * vel.y >= 0)
@@ -114,7 +115,7 @@ namespace Ingame.Physics
             {
                 RaycastHit2D hit = hits[i];
 
-                if (hit.collider == characterCollider) {
+                if (hit.collider == characterCollider || hit.collider.gameObject.tag == "Player") {
                     continue;
                 }
                 Vector2 collisionDisplacement = displacement.normalized * ((hit.distance > 0)? hit.distance : 0 );
@@ -134,21 +135,25 @@ namespace Ingame.Physics
 
         private void FixedUpdate()
         {
-            if (controlVelocity.y <= 0) {
-                velocity += gravity * Time.deltaTime;
-            }
-            else
+            if (enablePhysics)
             {
-                velocity = Vector2.zero;
-            }
-            Vector2 displacement = GetFinalDisplacement();
-            transform.Translate(displacement);
+                if (controlVelocity.y <= 0)
+                {
+                    velocity += gravity * Time.deltaTime;
+                }
+                else
+                {
+                    velocity = Vector2.zero;
+                }
+                Vector2 displacement = GetFinalDisplacement();
+                transform.Translate(displacement);
 
-            onGround = OnGround();
-            onHead = OnHead();
-            if (onGround || onHead) 
-            {
-                velocity = Vector2.zero;
+                onGround = OnGround();
+                onHead = OnHead();
+                if (onGround || onHead) 
+                {
+                    velocity = Vector2.zero;
+                }
             }
         }
     }   
