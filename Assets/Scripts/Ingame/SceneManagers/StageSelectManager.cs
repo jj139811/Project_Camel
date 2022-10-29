@@ -60,8 +60,10 @@ namespace Ingame.Manager
                     SceneManager.LoadScene("Stage_01");
                     break;
                 case 1:
+                    SceneManager.LoadScene("Stage_02");
                     break;
                 case 2:
+                    SceneManager.LoadScene("Stage_03");
                     break;
                 case 3:
                     SceneManager.LoadScene("Stage_04");
