@@ -43,7 +43,8 @@ namespace Ingame.Physics
             }
 
             Vector2 gravityDirection = (gravity.magnitude == 0)? Vector2.down : gravity.normalized;
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(transform.position.x, transform.position.y) + gravityDirection * groundDetectionTolerance, colliderSize - new Vector2(groundDetectionTolerance, 0), 0, gravityDirection, 0);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(transform.position.x, transform.position.y) + gravityDirection * groundDetectionTolerance
+            + characterCollider.offset, colliderSize - new Vector2(groundDetectionTolerance, 0), 0, gravityDirection, 0);
 
             for (int i = 0; i < hits.Length; i++)
             {
@@ -64,7 +65,8 @@ namespace Ingame.Physics
             }
 
             Vector2 gravityDirection = (gravity.magnitude == 0)? Vector2.up : -gravity.normalized;
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(transform.position.x, transform.position.y) + gravityDirection * groundDetectionTolerance, colliderSize - new Vector2(groundDetectionTolerance, 0), 0, gravityDirection, 0);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(new Vector2(transform.position.x, transform.position.y) + gravityDirection * groundDetectionTolerance
+            + characterCollider.offset, colliderSize - new Vector2(groundDetectionTolerance, 0), 0, gravityDirection, 0);
 
             for (int i = 0; i < hits.Length; i++)
             {
@@ -80,7 +82,8 @@ namespace Ingame.Physics
 
         private Vector2 CheckCollision(Vector2 pos, Vector2 vel) {
             Vector2 displacement = vel * Time.deltaTime;
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(pos, colliderSize, 0, displacement.normalized, displacement.magnitude);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(pos
+            + characterCollider.offset, colliderSize, 0, displacement.normalized, displacement.magnitude);
 
             float minDistance = displacement.magnitude;
             
@@ -109,7 +112,8 @@ namespace Ingame.Physics
             Vector2 defaultDisplacement = CheckCollision(currentPosition, velocity);
             
             Vector2 displacement = controlVelocity * Time.deltaTime;
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(currentPosition + defaultDisplacement, colliderSize, 0, displacement.normalized, displacement.magnitude);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(currentPosition + defaultDisplacement
+            + characterCollider.offset, colliderSize, 0, displacement.normalized, displacement.magnitude);
             
             for (int i = 0; i < hits.Length; i++)
             {

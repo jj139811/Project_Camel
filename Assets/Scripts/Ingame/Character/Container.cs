@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Ingame.Animation;
 
 namespace Ingame.Character
 {
@@ -31,11 +32,16 @@ namespace Ingame.Character
         }
         private void Update ()
         {
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, boxCollider2D.size, 0.0f, Vector2.up);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll((Vector2)transform.position
+            + boxCollider2D.offset, boxCollider2D.size, 0.0f, Vector2.up);
             for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit2D hit = hits[i];
                 if (hit.collider == boxCollider2D)
+                {
+                    continue;
+                }
+                if (hit.distance > 0.01f)
                 {
                     continue;
                 }
@@ -60,6 +66,11 @@ namespace Ingame.Character
                 }
                 if (slotIndex < slots.Length)
                 {
+                    CharacterAnimationManager animationManager = target.GetComponent<CharacterAnimationManager>();
+                    if (animationManager != null)
+                    {
+                        animationManager.flipRun = (slotIndex % 2 == 0);
+                    }
                     slots[slotIndex].AddObject(target);
                     slotIndex += 1;
                 }

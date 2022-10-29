@@ -12,6 +12,8 @@ namespace Ingame.Animation
         private GameObject spriteObject;
 
         private CharacterState prevState;
+
+        public bool flipRun = false;
         private void Awake () {
             character = gameObject.GetComponent<PlayerCharacter>();
             if (character == null)
@@ -50,7 +52,14 @@ namespace Ingame.Animation
                         animator.Play("default");
                         break;
                     case CharacterState.RUN:
-                        animator.Play("run");
+                        if (flipRun)
+                        {
+                            animator.Play("run_flip");
+                        }
+                        else
+                        {
+                            animator.Play("run");
+                        }
                         break;
                     default:
                         animator.Play("default");
