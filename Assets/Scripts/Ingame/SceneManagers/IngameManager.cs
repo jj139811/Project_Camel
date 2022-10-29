@@ -129,6 +129,11 @@ namespace Ingame.Manager
 
         private void SafeDestroy (GameObject component)
         {
+            if (component == characterHead)
+            {
+                ResetGame();
+                return;
+            }
             Container container = component.GetComponent<Container>();
             if (container != null)
             {
