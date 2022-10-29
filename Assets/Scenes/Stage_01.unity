@@ -550,7 +550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapMinBoundX: -10
-  mapMaxBoundX: 100
+  mapMaxBoundX: 24
   mapMinBoundY: -10
   mapMaxBoundY: 10
   cameraBoundMargin: 5
