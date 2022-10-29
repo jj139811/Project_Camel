@@ -33,8 +33,9 @@ namespace Ingame.Control {
             else
             {
                 moving = true;
+                
+                playerCharacter.SetDirection(direction.x > 0? CharacterDirection.RIGHT: CharacterDirection.LEFT);
             }
-            playerCharacter.SetDirection(direction.x > 0? CharacterDirection.RIGHT: CharacterDirection.LEFT);
             if (physics.onGround)
             {
                 Vector2 normal = physics.stepHitInfo.normal;

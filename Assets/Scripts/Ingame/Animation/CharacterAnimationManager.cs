@@ -9,38 +9,41 @@ namespace Ingame.Animation
     {
         private PlayerCharacter character;
         private Animator animator;
-        private SpriteRenderer spriteRenderer;
+        private GameObject spriteObject;
 
         private CharacterState prevState;
         private void Awake () {
             character = gameObject.GetComponent<PlayerCharacter>();
-            if (character == null) {
+            if (character == null)
+            {
                 throw new System.Exception("Cannot find PlayerCharacter of : " + gameObject.name);
             }
-            animator = transform.Find("sprite")?.gameObject.GetComponent<Animator>();
-            if (animator == null) {
-                throw new System.Exception("Cannot find Animator of : " + gameObject.name);
+            spriteObject = transform.Find("sprite")?.gameObject;
+            if (spriteObject == null)
+            {
+                throw new System.Exception("Cannot find sprite of : " + gameObject.name);
             }
-
-            spriteRenderer = transform.Find("sprite")?.gameObject.GetComponent<SpriteRenderer>();
-            if (animator == null) {
-                throw new System.Exception("Cannot find SpriteRenderer of : " + gameObject.name);
+            animator = spriteObject.GetComponent<Animator>();
+            if (animator == null)
+            {
+                throw new System.Exception("Cannot find Animator of : " + spriteObject.name);
             }
 
             prevState = CharacterState.DEFAULT;
         }
 
-        private void Update () {
+        private void FixedUpdate () {
             if (character.direction == CharacterDirection.LEFT)
             {
-                spriteRenderer.flipX = true;
+                spriteObject.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
             {
-                spriteRenderer.flipX = false;
+                spriteObject.transform.localScale = new Vector3(1, 1, 1);
             }
             if (prevState != character.state)
             {
+                Debug.Log("state changed from: " + prevState.ToString() + " to: " + character.state.ToString());
                 switch (character.state)
                 {
                     case CharacterState.DEFAULT:
