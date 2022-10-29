@@ -476,6 +476,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e29273d45915354e8c27d9a14fd37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableControl: 0
 --- !u!114 &265336243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,6 +1071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e29273d45915354e8c27d9a14fd37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableControl: 0
 --- !u!114 &670207215
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1503,6 +1505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e29273d45915354e8c27d9a14fd37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableControl: 0
 --- !u!114 &958896153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2238,6 +2241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e29273d45915354e8c27d9a14fd37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableControl: 0
 --- !u!114 &1674760867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2572,6 +2576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e29273d45915354e8c27d9a14fd37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableControl: 0
 --- !u!114 &2039886739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2639,7 +2644,7 @@ MonoBehaviour:
   slotPositions:
   - {x: -0.1, y: 0}
   - {x: 0.1, y: 0}
-  slotRenderingOrders: 0700000008000000
+  slotRenderingOrders: 0800000007000000
   containerOrder: 1
   slotIndex: 0
 --- !u!114 &2039886743
@@ -2824,6 +2829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e29273d45915354e8c27d9a14fd37be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableControl: 0
 --- !u!114 &2069263608
 MonoBehaviour:
   m_ObjectHideFlags: 0
