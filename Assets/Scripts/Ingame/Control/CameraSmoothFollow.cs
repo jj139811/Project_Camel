@@ -10,6 +10,10 @@ namespace Ingame.Control
         public float minSpeed = 5.0f;
         public float maxSpeed = 40.0f;
         public float v = 2.0f;
+        public float minBoundX = -1920f;
+        public float minBoundY = -1080f;
+        public float maxBoundX = 1920f;
+        public float maxBoundY = 1080f;
 
         private void FixedUpdate() {
             // Calculate velocity
@@ -40,6 +44,22 @@ namespace Ingame.Control
             }
 
             transform.Translate(displacement);
+            if (transform.position.x < minBoundX)
+            {
+                transform.Translate(Vector3.right * (minBoundX - transform.position.x));
+            }
+            if (transform.position.x > maxBoundX)
+            {
+                transform.Translate(Vector3.right * (maxBoundX - transform.position.x));
+            }
+            if (transform.position.y < minBoundY)
+            {
+                transform.Translate(Vector3.up * (minBoundY - transform.position.y));
+            }
+            if (transform.position.y > maxBoundY)
+            {
+                transform.Translate(Vector3.up * (maxBoundY - transform.position.y));
+            }
         }
     }
 }
