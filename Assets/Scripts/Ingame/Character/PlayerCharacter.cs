@@ -21,7 +21,7 @@ namespace Ingame.Character
     public class PlayerCharacter: MonoBehaviour
     {
         public CharacterState state {get; set;}
-        public CharacterDirection direction {get; private set;}
+        public CharacterDirection direction {get; set;}
         private CharacterPhysics physics;
         private PlayerInput control;
         public float moveSpeed {get; set;} = 10;

@@ -7,6 +7,15 @@ namespace Ingame.Manager
 {
     public class ResultSceneManager : MonoBehaviour
     {
+        private GameObject resultObject;
+        private void Start()
+        {
+            resultObject = GameObject.Find("result");
+            if (resultObject == null)
+            {
+                throw new System.Exception("cannot find result object!");
+            }
+        }
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -16,6 +25,7 @@ namespace Ingame.Manager
         }
         public void Next()
         {
+            Destroy(resultObject);
             SceneManager.LoadScene("Main");
         }
     }

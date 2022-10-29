@@ -7,7 +7,7 @@ namespace Ingame.Character
 {
     public class Container : MonoBehaviour
     {
-        protected Slot[] slots;
+        public Slot[] slots;
         public int numSlots = 4;
         public Vector2[] slotPositions;
         public int[] slotRenderingOrders;

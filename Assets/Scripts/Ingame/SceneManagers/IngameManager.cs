@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ingame.Control;
 using UnityEngine.SceneManagement;
+using Ingame.Character;
+using Ingame.Physics;
 
 namespace Ingame.Manager
 {
@@ -83,7 +85,46 @@ namespace Ingame.Manager
         }
         private void ShowResult()
         {
+            PackResult();
             SceneManager.LoadScene("Result");
+        }
+        private void PackResult()
+        {
+            GameObject resultObject = new GameObject("result");
+            Element headElement = characterHead.GetComponent<Element>();
+            GameObject root = characterHead;
+            if (headElement.parent != null)
+            {
+                root = headElement.parent.gameObject;
+            }
+            root.transform.position = Vector3.zero;
+            DisableAndAddComponent(root, resultObject);
+            resultObject.transform.localScale = new Vector3(3, 3, 1);
+            DontDestroyOnLoad(resultObject);
+        }
+        private void DisableAndAddComponent (GameObject component, GameObject resultObject)
+        {
+            CharacterPhysics physics = component.GetComponent<CharacterPhysics>();
+            physics.enablePhysics = false;
+            PlayerCharacter character = component.GetComponent<PlayerCharacter>();
+            character.enableStateUpdate = false;
+            character.state = CharacterState.DEFAULT;
+            character.direction = CharacterDirection.RIGHT;
+
+            PlayerInput playerInput = component.GetComponent<PlayerInput>();
+            playerInput.disableControl = true;
+
+            Container container = component.GetComponent<Container>();
+            if (container != null)
+            {
+                for (int i = 0; i < container.slotIndex; i++)
+                {
+                    Slot s = container.slots[i];
+                    s.SyncWithParent();
+                    DisableAndAddComponent(s.gameObject, resultObject);
+                }
+            }
+            component.transform.parent = resultObject.transform;
         }
     }
 }

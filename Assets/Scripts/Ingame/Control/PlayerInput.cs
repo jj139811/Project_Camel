@@ -12,6 +12,7 @@ namespace Ingame.Control {
         public bool moving {get; private set;}
         public bool jumping {get; private set;}
         private float jumpingDt;
+        public bool disableControl = false;
         private void Awake () {
             playerCharacter = gameObject.GetComponent<PlayerCharacter>();
             if (playerCharacter == null) {
@@ -26,6 +27,10 @@ namespace Ingame.Control {
         }
         public void Move(Vector2 direction)
         {
+            if (disableControl)
+            {
+                return;
+            }
             if (direction.magnitude < 0.001f)
             {
                 moving = false;
@@ -48,10 +53,18 @@ namespace Ingame.Control {
         }
         public void Stop()
         {
+            if (disableControl)
+            {
+                return;
+            }
             moving = false;
         }
         public void Jump()
         {
+            if (disableControl)
+            {
+                return;
+            }
             if (physics.onGround)
             {
                 physics.velocity = Vector2.up * playerCharacter.jumpSpeed;
@@ -61,6 +74,10 @@ namespace Ingame.Control {
         }
         public void JumpPressing ()
         {
+            if (disableControl)
+            {
+                return;
+            }
             if (jumping)
             {
                 jumpingDt += Time.deltaTime;
@@ -76,6 +93,10 @@ namespace Ingame.Control {
             }
         }
         public void JumpUp () {
+            if (disableControl)
+            {
+                return;
+            }
             jumping = false;
         }
     }

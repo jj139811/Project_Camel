@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Ingame.Physics;
+using Ingame.Control;
 
 namespace Ingame.Character
 {
     public class Slot
     {
-        private GameObject gameObject;
+        public GameObject gameObject {get; private set;}
         private GameObject parent;
         private PlayerCharacter targetCharacter;
         private PlayerCharacter parentCharacter;
@@ -60,11 +61,11 @@ namespace Ingame.Character
             {
                 if (parentCharacter.direction == CharacterDirection.RIGHT)
                 {
-                    this.gameObject.transform.position = (Vector2)parent.transform.position + this.position;
+                    this.gameObject.transform.localPosition = (Vector2)parent.transform.position + this.position;
                 }
                 else
                 {
-                    this.gameObject.transform.position = (Vector2)parent.transform.position + new Vector2(-this.position.x, this.position.y);
+                    this.gameObject.transform.localPosition = (Vector2)parent.transform.position + new Vector2(-this.position.x, this.position.y);
                 }
                 
                 if (targetCharacter != null)
