@@ -81,7 +81,7 @@ namespace Ingame.Manager
         }
         private void ResetGame()
         {
-            SceneManager.LoadScene("Stage_01");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         private void ShowResult()
         {
