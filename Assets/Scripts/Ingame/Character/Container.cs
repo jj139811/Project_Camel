@@ -71,7 +71,7 @@ namespace Ingame.Character
         {
             GameObject target = collider.gameObject;
             Element targetElement = target.GetComponent<Element>();
-            if (target.tag == "Player" && targetElement != null)
+            if (targetElement != null)
             {
                 if (targetElement.parent != null)
                 {
