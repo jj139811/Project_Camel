@@ -51,6 +51,7 @@ namespace Ingame.Character
                     sprites[i].sortingOrder = renderingOrder;
                 }
             }
+            SyncWithParent();
         }
 
         public void SyncWithParent ()

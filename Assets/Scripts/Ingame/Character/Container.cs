@@ -110,6 +110,8 @@ namespace Ingame.Character
             targetElement.parent = this;
             slotIndex += 1;
 
+            ResizeBoundary(target);
+
             if (targetContainer != null)
             {
                 GameObject targetChild = targetContainer.PopChild();
@@ -123,6 +125,54 @@ namespace Ingame.Character
                     targetChild = targetContainer.PopChild();
                 }
             }
+        }
+        private void ResizeBoundary (GameObject target)
+        {
+            BoxCollider2D targetCollider = target.GetComponent<BoxCollider2D>();
+            if (targetCollider == null)
+            {
+                return;
+            }
+            Vector2 targetPos = targetCollider.offset + (Vector2)target.transform.position
+            - (Vector2)transform.position;
+            float targetWidth = targetCollider.size.x;
+            float targetHeight = targetCollider.size.y;
+
+            Vector2 originalPos = boxCollider2D.offset;
+            float originalWidth = boxCollider2D.size.x;
+            float originalHeight = boxCollider2D.size.y;
+
+            float minBoundX = min(targetPos.x - targetWidth / 2, originalPos.x - originalWidth / 2);
+            float maxBoundX = max(targetPos.x + targetWidth / 2, originalPos.x + originalWidth / 2);
+
+            float minBoundY = min(targetPos.y - targetHeight / 2, originalPos.y - originalHeight / 2);
+            float maxBoundY = max(targetPos.y + targetHeight / 2, originalPos.y + originalHeight / 2);
+
+            float newWidth = maxBoundX - minBoundX;
+            float newHeight = maxBoundY - minBoundY;
+
+            Vector2 newPos = new Vector2((maxBoundX + minBoundX) / 2, (maxBoundY + minBoundY) / 2);
+
+            boxCollider2D.offset = newPos;
+            boxCollider2D.size = new Vector2(newWidth, newHeight);
+
+            transform.Translate(Vector3.down * (minBoundY - (originalPos.y - originalHeight / 2)));
+        }
+        private float min(float a, float b)
+        {
+            if (a > b)
+            {
+                return b;
+            }
+            return a;
+        }
+        private float max(float a, float b)
+        {
+            if (a < b)
+            {
+                return b;
+            }
+            return a;
         }
     }
 }
