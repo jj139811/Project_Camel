@@ -10,6 +10,7 @@ namespace Ingame.Character
         protected Slot[] slots;
         public int numSlots = 4;
         public Vector2[] slotPositions;
+        public int[] slotRenderingOrders;
         public int containerOrder = 0;
         public int slotIndex;
         private BoxCollider2D boxCollider2D;
@@ -22,12 +23,16 @@ namespace Ingame.Character
             }
             if (slotPositions.Length != numSlots)
             {
-                throw new System.Exception("slot number mismatch");
+                throw new System.Exception("slot position number mismatch");
+            }
+            if (slotRenderingOrders.Length != numSlots)
+            {
+                throw new System.Exception("slot order number mismatch");
             }
             slots = new Slot[numSlots];
             for (int i = 0; i < numSlots; i++)
             {
-                slots[i] = new Slot(gameObject, slotPositions[i]);
+                slots[i] = new Slot(gameObject, slotPositions[i], slotRenderingOrders[i]);
             }
             slotIndex = 0;
         }

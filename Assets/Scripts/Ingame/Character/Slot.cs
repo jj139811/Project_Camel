@@ -12,12 +12,14 @@ namespace Ingame.Character
         private PlayerCharacter targetCharacter;
         private PlayerCharacter parentCharacter;
         private Vector2 position;
+        private int renderingOrder;
 
-        public Slot (GameObject parent, Vector2 position)
+        public Slot (GameObject parent, Vector2 position, int renderingOrder)
         {
             this.parent = parent;
             this.position = position;
             this.gameObject = null;
+            this.renderingOrder = renderingOrder;
             this.parentCharacter = parent.GetComponent<PlayerCharacter>();
             if (parentCharacter == null) {
                 throw new System.Exception("Cannot find PlayerCharacter of : " + parent.name);
@@ -40,6 +42,15 @@ namespace Ingame.Character
                 throw new System.Exception("Cannot find PlayerCharacter of : " + target.name);
             }
             targetCharacter.enableStateUpdate = false;
+
+            SpriteRenderer[] sprites = target.GetComponent<Element>()?.sprites;
+            if (sprites != null)
+            {
+                for (int i = 0; i < sprites.Length; i++)
+                {
+                    sprites[i].sortingOrder = renderingOrder;
+                }
+            }
         }
 
         public void SyncWithParent ()

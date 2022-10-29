@@ -25,9 +25,12 @@ namespace Ingame.Character
         protected override void OnCollisionOccur(Collider2D collider)
         {
             base.OnCollisionOccur(collider);
-            if (slotIndex > 0)
+            if (slotIndex >= 1)
             {
                 character.moveSpeed = moveSpeed;
+            }
+            if (slotIndex >= 2)
+            {
                 character.jumpSpeed = jumpSpeed;
             }
         }
