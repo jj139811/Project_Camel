@@ -6,7 +6,9 @@ namespace Ingame.MapObject
 {
     public abstract class ToggleObject : MonoBehaviour
     {
-        BoxCollider2D boxCollider2D;
+        public GameObject ActiveSprite;
+        public GameObject InActiveSprite;
+        private BoxCollider2D boxCollider2D;
         protected bool isActive;
         private bool prevCollision;
         protected void Awake()
@@ -18,6 +20,8 @@ namespace Ingame.MapObject
             {
                 throw new System.Exception("cannot find box collider of: " + gameObject.name);
             }
+            ActiveSprite?.SetActive(isActive);
+            InActiveSprite?.SetActive(!isActive);
         }
         protected void FixedUpdate()
         {
@@ -47,6 +51,8 @@ namespace Ingame.MapObject
                     {
                         isActive = !isActive;
                         prevCollision = true;
+                        ActiveSprite?.SetActive(isActive);
+                        InActiveSprite?.SetActive(!isActive);
                         return true;
                     }
                     return false;

@@ -66,7 +66,7 @@ namespace Ingame.Manager
         {
             if (component.transform.position.y < mapMinBoundY)
             {
-                Destroy(component);
+                SafeDestroy(component);
                 return true;
             }
             return false;
@@ -125,6 +125,21 @@ namespace Ingame.Manager
                 }
             }
             component.transform.parent = resultObject.transform;
+        }
+
+        private void SafeDestroy (GameObject component)
+        {
+            Container container = component.GetComponent<Container>();
+            if (container != null)
+            {
+                for (int i = 0; i < container.slotIndex; i++)
+                {
+                    Slot s = container.slots[i];
+                    s.SyncWithParent();
+                    SafeDestroy(s.gameObject);
+                }
+            }
+            Destroy(component);
         }
     }
 }
