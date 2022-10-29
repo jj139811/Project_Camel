@@ -21,7 +21,7 @@ namespace Ingame.MapObject
         }
         protected void FixedUpdate()
         {
-            Debug.Log(CheckInteraction());
+            CheckInteraction();
             if (isActive)
             {
                 ActiveBehavior();
