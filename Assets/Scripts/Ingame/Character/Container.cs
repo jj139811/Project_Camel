@@ -10,7 +10,8 @@ namespace Ingame.Character
         protected Slot[] slots;
         public int numSlots = 4;
         public Vector2[] slotPositions;
-        protected int slotIndex;
+        public int containerOrder = 0;
+        public int slotIndex;
         private BoxCollider2D boxCollider2D;
         protected virtual void Awake()
         {
@@ -52,27 +53,69 @@ namespace Ingame.Character
                 slots[i].SyncWithParent();
             }
         }
+        public GameObject PopChild ()
+        {
+            if (slotIndex <= 0)
+            {
+                return null;
+            }
+            slotIndex -= 1;
+            return slots[slotIndex].PopObject();
+        }
         protected virtual void OnCollisionOccur (Collider2D collider)
         {
             GameObject target = collider.gameObject;
-            if (target.tag == "Player")
+            Element targetElement = target.GetComponent<Element>();
+            if (target.tag == "Player" && targetElement != null)
             {
-                for (int i = 0; i < slotIndex; i++)
+                if (targetElement.parent != null)
                 {
-                    if (slots[i].CheckObject(target))
-                    {
-                        return;
-                    }
+                    return;
                 }
                 if (slotIndex < slots.Length)
                 {
-                    CharacterAnimationManager animationManager = target.GetComponent<CharacterAnimationManager>();
-                    if (animationManager != null)
+                    
+                    AddToSlot(target);
+                }
+            }
+        }
+        private void AddToSlot(GameObject target)
+        {
+            CharacterAnimationManager animationManager = target.GetComponent<CharacterAnimationManager>();
+            Element targetElement = target.GetComponent<Element>();
+            Container targetContainer = target.GetComponent<Container>();
+            if (targetContainer != null)
+            {
+                int targetOrder = targetContainer.containerOrder;
+                if (targetOrder == containerOrder)
+                {
+                    throw new System.Exception("Container orders cannot be equal");
+                }
+                if (targetOrder < containerOrder)
+                {
+                    return;
+                }
+            }
+
+            if (animationManager != null)
+            {
+                animationManager.flipRun = (slotIndex % 2 == 0);
+            }
+            slots[slotIndex].AddObject(target);
+            targetElement.parent = this;
+            slotIndex += 1;
+
+            if (targetContainer != null)
+            {
+                GameObject targetChild = targetContainer.PopChild();
+                while (targetChild != null)
+                {
+                    AddToSlot(targetChild);
+                    if (slotIndex >= slots.Length)
                     {
-                        animationManager.flipRun = (slotIndex % 2 == 0);
+                        break;
                     }
-                    slots[slotIndex].AddObject(target);
-                    slotIndex += 1;
+                    targetChild = targetContainer.PopChild();
                 }
             }
         }

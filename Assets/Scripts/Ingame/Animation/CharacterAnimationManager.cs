@@ -45,7 +45,6 @@ namespace Ingame.Animation
             }
             if (prevState != character.state)
             {
-                Debug.Log("state changed from: " + prevState.ToString() + " to: " + character.state.ToString());
                 switch (character.state)
                 {
                     case CharacterState.DEFAULT:

@@ -11,7 +11,7 @@ namespace Ingame.Character
         private GameObject parent;
         private PlayerCharacter targetCharacter;
         private PlayerCharacter parentCharacter;
-        public Vector2 position;
+        private Vector2 position;
 
         public Slot (GameObject parent, Vector2 position)
         {
@@ -46,12 +46,27 @@ namespace Ingame.Character
         {
             if (this.gameObject != null)
             {
-                this.gameObject.transform.position = (Vector2)parent.transform.position + this.position;
+                if (parentCharacter.direction == CharacterDirection.RIGHT)
+                {
+                    this.gameObject.transform.position = (Vector2)parent.transform.position + this.position;
+                }
+                else
+                {
+                    this.gameObject.transform.position = (Vector2)parent.transform.position + new Vector2(-this.position.x, this.position.y);
+                }
+                
                 if (targetCharacter != null)
                 {
                     targetCharacter.state = parentCharacter.state;
                 }
             }
+        }
+        public GameObject PopObject ()
+        {
+            GameObject ret = this.gameObject;
+            this.gameObject = null;
+            this.targetCharacter = null;
+            return ret;
         }
     }
 }
