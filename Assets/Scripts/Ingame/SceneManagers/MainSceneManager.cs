@@ -16,7 +16,7 @@ namespace Ingame.Manager
         }
         public void Next()
         {
-            SceneManager.LoadScene("Stage_01");
+            SceneManager.LoadScene("StageSelect");
         }
     }
 }
